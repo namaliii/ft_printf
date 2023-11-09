@@ -6,7 +6,7 @@
 /*   By: anamieta <anamieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 10:39:57 by anamieta          #+#    #+#             */
-/*   Updated: 2023/11/08 18:00:00 by anamieta         ###   ########.fr       */
+/*   Updated: 2023/11/09 19:06:56 by anamieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,27 +37,23 @@ static int	formatted_output(const char *str, va_list *args)
 {
 	int	i;
 	int	len;
-	int	written;
 
-	i = -1;
+	i = 0;
 	len = 0;
-	while (str && str[++i])
+	if (len < 0)
+		return (-1);
+	while (str[i])
 	{
 		if (str[i] == '%' && str[i + 1])
 		{
-			written = ft_format(args, str[i + 1]);
-			len += written;
 			i++;
+			len += ft_format(args, str[i]);
 		}
 		else
 		{
-			if (str[i] == '%' && ++i)
-				continue ;
-			written = write(1, &str[i], 1);
-			len += written;
+			len += write(1, &str[i], 1);
 		}
-		if (written < 0)
-			return (-1);
+		i++;
 	}
 	return (len);
 }
@@ -73,6 +69,8 @@ int	ft_printf(const char *str, ...)
 	return (len);
 }
 
+// How does the function get to the one character after % we are looking for?
+
 // #include "ft_printf.h"
 // #include <stdio.h>
 
@@ -80,9 +78,8 @@ int	ft_printf(const char *str, ...)
 // {
 //     int myprintf;
 //     int sys_fun;
-
-//     myprintf = ft_printf("Output of my function: %x\n", 44096);
-//     sys_fun = printf("Output of sy function: %x\n", 44096);
+//     myprintf = ft_printf("%s --- %d Output of my function: %x\n", 44096);
+//     sys_fun = printf("%s --- %d Output of sy function: %x\n", 44096);
 //     printf("My function: %d\n", myprintf);
 //     printf("System function: %d\n", sys_fun);
 //     return (0);

@@ -6,7 +6,7 @@
 /*   By: anamieta <anamieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 15:23:01 by anamieta          #+#    #+#             */
-/*   Updated: 2023/11/08 17:59:48 by anamieta         ###   ########.fr       */
+/*   Updated: 2023/11/09 19:04:25 by anamieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	ft_putstr_fd(char *s, int fd)
 	if (s == NULL)
 		return (write(fd, "(null)", 6));
 	len = ft_strlen(s);
-	write(fd, s, len); // can this be removed? whats the point?
+	write(fd, s, len);
 	return (len);
 }
 
@@ -53,11 +53,11 @@ int	ft_putnbr_fd(int n, int fd)
 		i = ft_putnbr_fd(-n, fd);
 		return (i + 1);
 	}
-	if (n > 9) // this whole piece please
+	if (n > 9)
 	{
 		i = ft_putnbr_fd(n / 10, fd);
 		digit = n % 10 + '0';
-		return (i + ft_putchar_fd(digit, fd)); // else? base case
+		return (i + ft_putchar_fd(digit, fd));
 	}
 	digit = '0' + n;
 	return (ft_putchar_fd(digit, fd));
@@ -71,11 +71,11 @@ int	ft_putunsignednbr_fd(unsigned int n, int fd)
 
 	if (n > 9)
 	{
-		count = ft_putunsignednbr_fd(n / 10, fd); // and this
+		count = ft_putunsignednbr_fd(n / 10, fd);
 		if (count == -1)
 			return (-1);
 		c = '0' + n % 10;
-		written = write(fd, &c, 1); // this makes written = 1?
+		written = write(fd, &c, 1);
 		if (written == -1)
 			return (-1);
 		return (count + written);
