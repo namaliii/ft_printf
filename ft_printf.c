@@ -6,7 +6,7 @@
 /*   By: anamieta <anamieta@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/03 10:39:57 by anamieta          #+#    #+#             */
-/*   Updated: 2023/11/09 19:06:56 by anamieta         ###   ########.fr       */
+/*   Updated: 2023/11/10 14:03:01 by anamieta         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,23 +37,27 @@ static int	formatted_output(const char *str, va_list *args)
 {
 	int	i;
 	int	len;
+	int	written;
 
-	i = 0;
+	i = -1;
 	len = 0;
-	if (len < 0)
-		return (-1);
-	while (str[i])
+	while (str[++i])
 	{
 		if (str[i] == '%' && str[i + 1])
 		{
 			i++;
-			len += ft_format(args, str[i]);
+			written = ft_format(args, str[i]);
+			if (written == -1)
+				return (-1);
+			len += written;
 		}
 		else
 		{
-			len += write(1, &str[i], 1);
+			written = write(1, &str[i], 1);
+			if (written == -1)
+				return (-1);
+			len += written;
 		}
-		i++;
 	}
 	return (len);
 }
